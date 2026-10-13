@@ -75,7 +75,7 @@ git push -u origin main
 | 1 | `portfolio` | 포트폴리오 전체 목록 |
 | 2 | `octv` | **공개 전환 후에만** 고정 (비공개 저장소는 방문자에게 보이지 않음) |
 | 3 | `QuestismTeam/GoodDeedQuest` | 기여한 Organization 저장소도 고정할 수 있습니다 |
-| 4 | 클라이밍 프로젝트 저장소 | 저장소를 올린 뒤 |
+| 4 | 클라이밍 프로젝트 저장소 | 소스코드를 공개한 뒤 (아래 '클라이밍 프로젝트 소스코드' 참고) |
 
 나머지 저장소(`chat-agent-kdt2604-server`, `PyDeploy01`, `ShopMaster`)는 대표 프로젝트와 겹치지 않게 고정하지 않는 것을 권장합니다.
 
@@ -94,14 +94,16 @@ git push -u origin main
   - `projects/01-octv/TECHNICAL.md` 맨 위 **소스코드** 링크
   - (선택) 프로필 README의 OCTV 카드 링크 줄에 `· [소스코드](https://github.com/alswo0548/octv)` 추가
 
-### 클라이밍 프로젝트 자료
+### 클라이밍 프로젝트 소스코드
 
-아래 중 하나가 있으면 소개 페이지와 기술 상세 문서를 실제 코드 기준으로 채웁니다.
+소개 페이지와 기술 상세 문서는 전달받은 프로젝트 파일(`myweb`)을 기준으로 채웠고, 소스코드는 아직 어디에도 올리지 않았습니다.
 
-- GitHub 저장소 주소, 또는 프로젝트 폴더(압축 파일)
-- 실행 화면 스크린샷 2~4장 또는 실행 방법 (직접 실행해 GIF를 만들 수 있음)
-
-자료가 준비되기 전에는 03 카드를 `자료 준비 중`으로 두거나, 프로필 README에서 03 블록(`<a href=".../03-climbing-web/...">`부터 다음 `<br clear="right">`까지)을 잠시 지워도 됩니다.
+- 공개 전 확인: 코드에 **OpenWeather API 키**(JavaScript)와 **Kakao JavaScript 키**(HTML)가 그대로 들어 있습니다.
+  - OpenWeather 키는 새로 발급받아 교체하고, 저장소에는 키를 넣지 않는 방식(설정 파일 분리 또는 서버를 거친 호출)으로 바꾼 뒤 올리는 것을 권장합니다.
+  - Kakao JavaScript 키는 브라우저용 키라 노출 자체를 막을 수는 없으므로, Kakao Developers에서 **사이트 도메인**을 실제 사용할 주소로만 등록해 두세요.
+- 공개 후 바꿀 곳
+  - `projects/03-climbing-web/README.md` 맨 아래 **소스코드** 줄을 저장소 링크로 교체
+  - (선택) 프로필 README의 03 카드 링크 줄에 `· [소스코드](저장소 주소)` 추가
 
 ## 6. 이후 수정 방법
 

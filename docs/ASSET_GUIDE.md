@@ -23,7 +23,16 @@ assets/
 │   ├── 02_team_challenge_llm.mp4
 │   └── 02_team_challenge_llm.png
 └── 03-climbing-web/
-    └── thumbnail.png          # 현재 '준비 중' 이미지
+    ├── thumbnail.png
+    ├── 01_gym_map_search.gif        # 지도 검색 · 로드뷰 · 날씨 시연
+    ├── 02_gym_recommend.gif         # 성향 설문 추천 시연
+    ├── 03_results_chart_players.gif # 선수 기록 차트 → 선수 상세 시연
+    ├── (같은 이름의 .mp4 · .png)
+    └── screens/                     # 실행 화면 스크린샷 (1440px 폭 JPG)
+        ├── main.jpg
+        ├── disciplines.jpg
+        ├── players.jpg
+        └── results.jpg
 ```
 
 ## 파일명 규칙
