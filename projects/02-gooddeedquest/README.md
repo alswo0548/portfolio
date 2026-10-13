@@ -9,7 +9,10 @@
 
 ## 시연 1 · 커뮤니티 추천 알고리즘 갱신
 
-<img align="left" width="40%" src="../../assets/02-gooddeedquest/01_community_algorithm.gif" alt="커뮤니티 추천 피드를 당겨서 새로고침해 첫 게시글이 바뀌는 시연">
+<table>
+<tr>
+<td width="40%" valign="top"><img width="100%" src="../../assets/02-gooddeedquest/01_community_algorithm.gif" alt="커뮤니티 추천 피드를 당겨서 새로고침해 첫 게시글이 바뀌는 시연"></td>
+<td valign="top">
 
 **무엇을 하나요**<br>
 게시글마다 **관심 카테고리 · 지역 · 최신성 · 반응도 · 작성자 신뢰도**를 합산한 100점 점수로 피드를 정렬합니다.
@@ -27,13 +30,18 @@
 
 [고화질 MP4](../../assets/02-gooddeedquest/01_community_algorithm.mp4) · [알고리즘 상세 →](TECHNICAL.md#6-1-커뮤니티-개인화-추천-피드)
 
-<br clear="left">
+</td>
+</tr>
+</table>
 
 <br>
 
 ## 시연 2 · 팀 챌린지 생성 → AI 팀원 추천(LLM) → 초대
 
-<img align="left" width="40%" src="../../assets/02-gooddeedquest/02_team_challenge_llm.gif" alt="팀 챌린지 방을 만들고 GPT-4o가 생성한 추천 이유를 보고 친구를 초대하는 시연">
+<table>
+<tr>
+<td width="40%" valign="top"><img width="100%" src="../../assets/02-gooddeedquest/02_team_challenge_llm.gif" alt="팀 챌린지 방을 만들고 GPT-4o가 생성한 추천 이유를 보고 친구를 초대하는 시연"></td>
+<td valign="top">
 
 **무엇을 하나요**<br>
 팀장이 방을 만들고 **친구 초대**를 누르면, 백엔드가 초대 가능한 후보와 최근 30일 활동을 AI 서버로 보냅니다.
@@ -52,7 +60,9 @@ LangGraph가 후보 점수를 계산해 상위 5명을 고르고, **GPT-4o가 �
 
 [고화질 MP4](../../assets/02-gooddeedquest/02_team_challenge_llm.mp4) · [추천 파이프라인 상세 →](TECHNICAL.md#6-2-팀-챌린지--ai-팀원-추천)
 
-<br clear="left">
+</td>
+</tr>
+</table>
 
 <br>
 

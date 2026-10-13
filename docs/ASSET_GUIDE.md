@@ -75,6 +75,23 @@ assets/
 
 3. GIF 바로 아래에 기능 설명 1~3문장과 **"이 장면을 보세요"** 한 줄을 적습니다.
 
+세로로 긴 모바일 화면 GIF는 GoodDeedQuest 소개 페이지처럼 **2칸 표**로 GIF와 설명을 나란히 둡니다.
+`<img align="left">` 로 띄우면 번호 목록 · 글머리 기호가 GIF 위에 겹쳐 보일 수 있으니 쓰지 않습니다.
+
+```html
+<table>
+<tr>
+<td width="40%" valign="top"><img width="100%" src="../../assets/02-gooddeedquest/01_community_algorithm.gif" alt="설명"></td>
+<td valign="top">
+
+**무엇을 하나요**<br>
+(설명 — 표 칸 안에서도 Markdown을 쓰려면 위아래에 빈 줄을 둡니다)
+
+</td>
+</tr>
+</table>
+```
+
 ## 지켜야 할 원칙
 
 - 실제로 실행한 화면만 사용합니다. 목업 화면은 **목업**이라고 표시합니다.
