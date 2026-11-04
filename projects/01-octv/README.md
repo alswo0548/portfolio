@@ -7,13 +7,13 @@
 
 저는 **외부 API·MCP 연동 → LangGraph 사건 분석 → 위험도·기관·경로 추천 → 기관 전달·FCM**을 구현하고, Docker 배포와 서비스 통합을 맡았습니다. 팀원의 CCTV 탐지·사건 생성 흐름에 판단과 대응 지원을 연결했습니다.
 
-**미리보기를 누르면 실제 시연 MP4를 볼 수 있습니다.** 페이지에는 가벼운 정지 이미지를 먼저 표시합니다.
+**미리보기를 누르면 MP4 파일 페이지가 열립니다. **View raw** 또는 다운로드 버튼으로 영상을 확인할 수 있습니다.** 페이지에는 가벼운 정지 이미지를 먼저 표시합니다.
 
 <br>
 
 ## 시연 1 · CCTV 영상과 YOLO 재난 탐지
 
-[![실제 관제 전체 화면에서 N001 영상과 flood 바운딩박스·신뢰도 표시](../../assets/01-octv/demo_cctv.jpg)](../../assets/01-octv/demo_cctv.mp4)
+<a href="../../assets/01-octv/demo_cctv.mp4"><img src="../../assets/01-octv/demo_cctv.jpg" alt="실제 관제 전체 화면에서 N001 영상과 flood 바운딩박스·신뢰도 표시" width="1348" height="926"></a>
 
 **무엇을 하나요** — 선택한 CCTV의 영상, 탐지 박스와 신뢰도, 수집·분석 상태를 함께 확인합니다.
 
@@ -23,7 +23,7 @@
 2. 실제 YOLO가 생성한 JSON 결과가 `flood` 박스와 신뢰도로 표시됩니다.
 3. 영상 재생과 수집·분석 상태를 한 화면에서 확인합니다.
 
-[▶ 전체 화면 영상](../../assets/01-octv/demo_cctv.mp4) · [탐지 이후의 처리 흐름 →](TECHNICAL.md#6-사건-처리-흐름)
+[▶ MP4 열기 · 다운로드](../../assets/01-octv/demo_cctv.mp4) · [탐지 이후의 처리 흐름 →](TECHNICAL.md#6-사건-처리-흐름)
 
 <sub>운영 웹의 재난 시연 영상입니다. 실제 도로에서 지금 발생한 재난을 뜻하지 않습니다. 표시용 YOLO 분석은 사건 생성과 분리되어 있으며, 녹화 중 새 사건을 생성하지 않았습니다.</sub>
 
@@ -31,7 +31,7 @@
 
 ## 시연 2 · 통합관제 지도 → 사건 조회
 
-[![통합관제의 지도와 P1 우선 목록에서 사건을 선택](../../assets/01-octv/demo_overview.jpg)](../../assets/01-octv/demo_overview.mp4)
+<a href="../../assets/01-octv/demo_overview.mp4"><img src="../../assets/01-octv/demo_overview.jpg" alt="통합관제의 지도와 P1 우선 목록에서 사건을 선택" width="1348" height="926"></a>
 
 **무엇을 하나요** — 전체 사건의 위치와 대응 우선순위를 살펴보고 필요한 사건으로 이동합니다.
 
@@ -41,13 +41,13 @@
 2. P1 침수 사건을 클릭합니다.
 3. 사건관리 목록에서 해당 사건이 선택되고 저장된 탐지 이미지를 조회합니다.
 
-[▶ 전체 화면 영상](../../assets/01-octv/demo_overview.mp4) · [사건 데이터와 조회 구조 →](TECHNICAL.md#7-데이터베이스와-api)
+[▶ MP4 열기 · 다운로드](../../assets/01-octv/demo_overview.mp4) · [사건 데이터와 조회 구조 →](TECHNICAL.md#7-데이터베이스와-api)
 
 <br>
 
 ## 시연 3 · 외부 상황과 위험도 판단
 
-[![사건 분석 근거와 외부 관측값을 함께 확인하는 운영 화면](../../assets/01-octv/demo_analysis.jpg)](../../assets/01-octv/demo_analysis.mp4)
+<a href="../../assets/01-octv/demo_analysis.mp4"><img src="../../assets/01-octv/demo_analysis.jpg" alt="사건 분석 근거와 외부 관측값을 함께 확인하는 운영 화면" width="1348" height="926"></a>
 
 **무엇을 하나요** — 위험도·P1/P2/P3 우선순위와 판단에 사용한 외부 정보를 함께 확인합니다.
 
@@ -57,7 +57,7 @@
 2. **분석 내용 확인**을 눌러 판단 근거를 펼칩니다.
 3. 관측값의 출처·시각과 시나리오 설정값을 구분합니다.
 
-[▶ 전체 화면 영상](../../assets/01-octv/demo_analysis.mp4) · [MCP·위험도 계산 코드 →](TECHNICAL.md#8-핵심-구현)
+[▶ MP4 열기 · 다운로드](../../assets/01-octv/demo_analysis.mp4) · [MCP·위험도 계산 코드 →](TECHNICAL.md#8-핵심-구현)
 
 <sub>85점·P1, 수위 2.4m·차단 차로 2개는 DEMO 설정값입니다. 강수량 카드 0mm는 저장된 관측값이고, 설명의 30mm는 시나리오 문구입니다.</sub>
 
@@ -65,7 +65,7 @@
 
 ## 시연 4 · 대응기관과 후보 경로 비교
 
-[![강남소방서에서 사건 위치까지의 추천 경로와 거리·시간·판정](../../assets/01-octv/demo_routes.jpg)](../../assets/01-octv/demo_routes.mp4)
+<a href="../../assets/01-octv/demo_routes.mp4"><img src="../../assets/01-octv/demo_routes.jpg" alt="강남소방서에서 사건 위치까지의 추천 경로와 거리·시간·판정" width="1348" height="926"></a>
 
 **무엇을 하나요** — 추천 기관에서 사건 위치까지의 경로를 지도·거리·시간·점수로 비교합니다.
 
@@ -75,7 +75,7 @@
 2. 동부도로사업소의 **후보 2**를 선택해 경로와 점수를 비교합니다.
 3. **강남소방서** 탭으로 전환해 다른 기관의 접근 경로를 확인합니다.
 
-[▶ 전체 화면 영상](../../assets/01-octv/demo_routes.mp4) · [기관 선정·경로 평가 코드 →](TECHNICAL.md#8-핵심-구현)
+[▶ MP4 열기 · 다운로드](../../assets/01-octv/demo_routes.mp4) · [기관 선정·경로 평가 코드 →](TECHNICAL.md#8-핵심-구현)
 
 <sub>‘시연’ 시간·점수는 가상 교통상황이며 원본 API 결과와 구분됩니다. ‘추가 확인 필요’는 통제 정보가 검증되지 않은 상태입니다. 추천은 관제 요원의 선택을 지원하며 실제 출동 지령이나 안전한 주행을 보장하지 않습니다.</sub>
 
