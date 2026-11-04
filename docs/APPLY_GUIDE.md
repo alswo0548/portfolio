@@ -85,11 +85,11 @@ git push -u origin main
 
 ### OCTV 소스코드 공개 여부
 
-현재 `alswo0548/octv`는 **비공개**라 방문자가 열면 404가 납니다. 그래서 소개 페이지에는 "비공개 팀 저장소"로만 표기했습니다.
+현재 `alswo0548/octv`는 **비공개**라 방문자가 열면 404가 납니다. 소개 페이지 링크에는 "비공개 팀 저장소·접근 권한 필요"를 명시했습니다.
 
 - 공개하려면: 팀원 동의 → 저장소 **Settings → General → Danger Zone → Change repository visibility → Public**
 - 공개 전 확인: 포트폴리오 작업 중 `main`과 전체 커밋 이력을 검사했을 때 실제 API 키·비밀번호는 발견되지 않았습니다(`.env.example`의 빈 값만 존재). 공개 직전에 한 번 더 확인하세요.
-- 공개 후 바꿀 곳 (주석으로 표시해 둠)
+- 공개 후 접근 권한 안내를 갱신할 곳
   - `projects/01-octv/README.md` 맨 아래 **소스코드** 줄
   - `projects/01-octv/TECHNICAL.md` 맨 위 **소스코드** 링크
   - (선택) 프로필 README의 OCTV 카드 링크 줄에 `· [소스코드](https://github.com/alswo0548/octv)` 추가
@@ -111,7 +111,7 @@ git push -u origin main
 |---|---|
 | 문장 수정 | portfolio 저장소에서 해당 `.md` 파일 → 연필(✏️) → 수정 → Commit |
 | GIF·이미지 교체 | **같은 파일명**으로 `assets/<프로젝트>/`에 다시 업로드 (자세한 규칙: [ASSET_GUIDE.md](ASSET_GUIDE.md)) |
-| OCTV 진행 상태 갱신 | `projects/01-octv/README.md`의 **진행 상태** 표에서 ⏳ → 🔄 → ✅ 변경 |
+| OCTV 후속 변경 | 최종 발표 완료 상태를 유지하고 **최종 구현 범위와 담당 역할**, 기술 상세의 확인 기준·검증 범위를 함께 갱신 |
 | 프로젝트 추가 | `projects/04-이름/README.md`, `assets/04-이름/thumbnail.png`를 만들고 portfolio README와 프로필 README에 카드 블록을 하나 복사해 추가 |
 | 프로필 이미지가 바로 안 바뀔 때 | GitHub 이미지 캐시 때문입니다. 몇 분 기다리거나 이미지 주소 끝에 `?v=2`를 붙입니다 |
 
@@ -120,7 +120,8 @@ git push -u origin main
 - [ ] `github.com/alswo0548` 첫 화면에 썸네일 3개가 보인다 (PC · 휴대폰)
 - [ ] 프로젝트 카드 → 소개 페이지 → 기술 상세 → 목록으로 돌아가기가 모두 열린다
 - [ ] GoodDeedQuest 소개 페이지의 GIF 2개가 재생된다
-- [ ] 비공개 저장소로 가는 링크가 없다 (OCTV 공개 전)
+- [ ] OCTV 소스 링크에 비공개·접근 권한 필요 안내가 있다
+- [ ] OCTV 소개 페이지의 GIF 3개가 재생되고 기존/신규 촬영 및 DEMO 구분이 보인다
 - [ ] 화면·문서에 API 키, 비밀번호, 실제 개인정보가 없다
 - [ ] 팀 프로젝트에서 팀원이 한 일을 내 기여로 쓰지 않았다
 

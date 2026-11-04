@@ -5,18 +5,18 @@ AI 서비스 · Python 백엔드 개발자 이민재의 대표 프로젝트 3개
 
 | | 프로젝트 | 성격 | 상태 | 바로가기 |
 |:-:|---|---|:-:|---|
-| 01 | **OCTV** · AI 재난 CCTV 대응 지원 시스템 | 최종 프로젝트 · 2인 · 팀장 | 개발 중 | [소개](projects/01-octv/README.md) · [기술 상세](projects/01-octv/TECHNICAL.md) |
+| 01 | **OCTV** · AI 재난 CCTV 대응 지원 시스템 | 최종 프로젝트 · 2인 · 팀장 | 완료 | [소개](projects/01-octv/README.md) · [기술 상세](projects/01-octv/TECHNICAL.md) |
 | 02 | **GoodDeedQuest** · AI 기반 선행 퀘스트 플랫폼 | 중간 프로젝트 · 5인 | 완료 | [소개](projects/02-gooddeedquest/README.md) · [기술 상세](projects/02-gooddeedquest/TECHNICAL.md) |
 | 03 | **Climbing Web** · 클라이밍장 · 선수 정보 웹사이트 | 개인 프로젝트 · 1인 | 완료 | [소개](projects/03-climbing-web/README.md) · [기술 상세](projects/03-climbing-web/TECHNICAL.md) |
 
 <br>
 
-<a href="projects/01-octv/README.md"><img align="right" width="46%" src="assets/01-octv/thumbnail.png" alt="OCTV 썸네일 — 통합관제 WEB 목업 화면"></a>
+<a href="projects/01-octv/README.md"><img align="right" width="46%" src="assets/01-octv/thumbnail.png" alt="OCTV 썸네일 — 실제 운영 웹의 사건 지도와 우선순위 목록"></a>
 
 ### 01 · OCTV
 
 CCTV로 탐지한 재난 사건의 위험도와 대응 우선순위를 판단하고, 대응 기관·접근 경로 결정을 돕는 관제 플랫폼입니다.
-DB 설계, 사건 저장·조회 API, 기관별 조회 권한, AI 판단 작업 큐, 외부 API·MCP 연동을 구현했고 판단·추천 기능을 개발하고 있습니다.
+팀장으로 외부 API·MCP 연동, LangGraph 사건 분석, 위험도·기관·경로 추천, 기관 전달·FCM 알림, CCTV 적응학습과 배포 통합을 맡았습니다. **실제 웹 시연 GIF 3개**가 있습니다.
 
 [**소개 보기 →**](projects/01-octv/README.md)
 

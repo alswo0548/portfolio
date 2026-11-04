@@ -9,11 +9,15 @@
 assets/
 ├── 01-octv/
 │   ├── thumbnail.png          # 프로필·목록 카드 이미지 (1280×640)
-│   ├── erd.png                # 기술 상세 문서용 ERD
-│   └── screens/               # 실행 화면 스크린샷 (1600px 폭 JPG, 현재는 목업 UI)
+│   ├── erd.png                # 초기 설계 ERD (2026-10-02)
+│   ├── 01_cctv_detection.gif   # 기존 실제 웹 촬영본의 연속 CCTV 구간
+│   ├── 02_incident_analysis.gif # 운영 웹 사건 분석 (2026-11-04)
+│   ├── 03_agency_routes.gif     # 운영 웹 경로 비교 (2026-11-04)
+│   └── screens/               # 실제 운영 화면 JPG, 계정 영역 크롭
 │       ├── overview.jpg
 │       ├── incidents.jpg
-│       └── routes.jpg
+│       ├── routes.jpg
+│       └── delivery.jpg
 ├── 02-gooddeedquest/
 │   ├── thumbnail.png
 │   ├── 01_community_algorithm.gif   # 소개 페이지 시연 GIF
@@ -62,14 +66,14 @@ assets/
 2. 커밋 후 GitHub에서 소개 페이지를 열어 바뀐 이미지를 확인합니다.
 3. 프로필 화면은 GitHub 이미지 캐시 때문에 몇 분 늦게 바뀔 수 있습니다. 바로 바꾸고 싶다면 프로필 README의 이미지 주소 끝에 `?v=2` 처럼 버전을 붙입니다.
 
-## 새 시연 GIF 추가 방법 (예: OCTV)
+## 새 시연 GIF 추가 방법
 
-1. `assets/01-octv/01_incident_scope.gif`로 저장합니다.
-2. `projects/01-octv/README.md`의 **화면 미리보기** 위에 아래 형식으로 추가합니다.
+1. `assets/01-octv/02_incident_analysis.gif`로 저장합니다.
+2. `projects/01-octv/README.md`의 해당 **시연** 섹션에 아래 형식으로 추가합니다.
 
 ```html
 <p align="center">
-  <img src="../../assets/01-octv/01_incident_scope.gif" alt="기관별 사건 조회 범위 시연" width="800">
+  <img src="../../assets/01-octv/02_incident_analysis.gif" alt="사건 상세와 위험도 분석 시연" width="100%">
 </p>
 ```
 
