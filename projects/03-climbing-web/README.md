@@ -9,7 +9,9 @@
 
 ## 시연 1 · 클라이밍장 찾기 — 지도 · 필터 · 로드뷰 · 실시간 날씨
 
-<img src="../../assets/03-climbing-web/01_gym_map_search.gif" width="100%" alt="클라이밍장 지도에서 리드암벽 필터와 키워드 검색으로 장소를 고르고 로드뷰와 날씨를 확인하는 시연">
+![클라이밍장 지도에서 리드암벽 필터와 키워드 검색으로 장소를 고르고 로드뷰와 날씨를 확인하는 시연](../../assets/03-climbing-web/01_gym_map_search.gif)
+
+[GIF 원본 열기](../../assets/03-climbing-web/01_gym_map_search.gif?raw=1)
 
 **무엇을 하나요** — 클라이밍장 20곳(실내 15 · 리드암벽 2 · 자연암벽 3)을 Kakao 지도에 표시하고, 유형 필터와 키워드로 좁혀 장소 정보 · 로드뷰 · 날씨를 함께 보여줍니다.
 
@@ -26,7 +28,9 @@
 
 ## 시연 2 · 성향 설문 10문항 → 실내 클라이밍장 TOP 3 추천
 
-<img src="../../assets/03-climbing-web/02_gym_recommend.gif" width="100%" alt="주소를 입력하고 성향 설문 10문항에 답해 실내 클라이밍장 TOP 3를 추천받은 뒤 지도에서 확인하는 시연">
+![주소를 입력하고 성향 설문 10문항에 답해 실내 클라이밍장 TOP 3를 추천받은 뒤 지도에서 확인하는 시연](../../assets/03-climbing-web/02_gym_recommend.gif)
+
+[GIF 원본 열기](../../assets/03-climbing-web/02_gym_recommend.gif?raw=1)
 
 **무엇을 하나요** — 기준 주소와 10문항 설문 답변으로 실내 클라이밍장 15곳에 점수를 매겨 **TOP 3**를 추천합니다.
 
@@ -42,7 +46,9 @@
 
 ## 시연 3 · 선수 기록 차트 → 선수 상세 이동 · 필터
 
-<img src="../../assets/03-climbing-web/03_results_chart_players.gif" width="100%" alt="선수를 검색해 연도별·종목별·전체 메달 차트를 바꿔 보고 선수 상세 페이지로 이동해 필터와 정렬을 적용하는 시연">
+![선수를 검색해 연도별·종목별·전체 메달 차트를 바꿔 보고 선수 상세 페이지로 이동해 필터와 정렬을 적용하는 시연](../../assets/03-climbing-web/03_results_chart_players.gif)
+
+[GIF 원본 열기](../../assets/03-climbing-web/03_results_chart_players.gif?raw=1)
 
 **무엇을 하나요** — 선수 15명의 수상 기록을 **Chart.js 차트 3종**으로 보여주고, 선수 소개 페이지의 해당 선수 위치로 바로 이동합니다.
 
