@@ -1,5 +1,9 @@
 # 이민재 · 포트폴리오
 
+> **최신 공개 포트폴리오:** [portfolio-showcase](https://github.com/alswo0548/portfolio-showcase) · [실제 기능 시연](https://alswo0548.github.io/portfolio-showcase/)
+>
+> 기존 링크와 작업 이력을 보존하기 위해 이 저장소를 유지합니다.
+
 AI 서비스 · Python 백엔드 개발자 이민재의 대표 프로젝트 3개입니다.<br>
 각 프로젝트는 **소개 페이지(시연 화면 중심) → 기술 상세 문서** 두 단계로 볼 수 있습니다.
 
