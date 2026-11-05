@@ -5,13 +5,15 @@
 
 `중간 프로젝트` · `5인 팀` · `2026.06.26 ~ 2026.08.11` · `팀명: 퀘스트 지상주의`
 
+<sub>미리보기를 누르면 MP4 파일 페이지가 열립니다. **View raw** 또는 다운로드 버튼으로 영상을 확인할 수 있습니다. 정지 이미지를 먼저 표시해 GIF 로딩 대기를 줄였습니다.</sub>
+
 <br>
 
 ## 시연 1 · 커뮤니티 추천 알고리즘 갱신
 
 <table>
 <tr>
-<td width="40%" valign="top"><img width="100%" src="../../assets/02-gooddeedquest/01_community_algorithm.gif" alt="커뮤니티 추천 피드를 당겨서 새로고침해 첫 게시글이 바뀌는 시연"></td>
+<td width="40%" valign="top"><a href="../../assets/02-gooddeedquest/01_community_algorithm.mp4"><img width="400" height="968" src="../../assets/02-gooddeedquest/01_community_algorithm.jpg" alt="커뮤니티 추천 피드를 당겨서 새로고침해 첫 게시글이 바뀌는 시연 — 클릭하여 영상 보기"></a></td>
 <td valign="top">
 
 **무엇을 하나요**<br>
@@ -40,7 +42,7 @@
 
 <table>
 <tr>
-<td width="40%" valign="top"><img width="100%" src="../../assets/02-gooddeedquest/02_team_challenge_llm.gif" alt="팀 챌린지 방을 만들고 GPT-4o가 생성한 추천 이유를 보고 친구를 초대하는 시연"></td>
+<td width="40%" valign="top"><a href="../../assets/02-gooddeedquest/02_team_challenge_llm.mp4"><img width="400" height="968" src="../../assets/02-gooddeedquest/02_team_challenge_llm.jpg" alt="팀 챌린지 방을 만들고 GPT-4o가 생성한 추천 이유를 보고 친구를 초대하는 시연 — 클릭하여 영상 보기"></a></td>
 <td valign="top">
 
 **무엇을 하나요**<br>

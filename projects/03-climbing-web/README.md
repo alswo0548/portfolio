@@ -5,11 +5,13 @@
 
 `개인 프로젝트` · `1인` · `2026.05` · `프로젝트명: CLIMB HIGHER BEYOND LIMITS`
 
+<sub>미리보기를 누르면 MP4 파일 페이지가 열립니다. **View raw** 또는 다운로드 버튼으로 영상을 확인할 수 있습니다. 정지 이미지를 먼저 표시해 GIF 로딩 대기를 줄였습니다.</sub>
+
 <br>
 
 ## 시연 1 · 클라이밍장 찾기 — 지도 · 필터 · 로드뷰 · 실시간 날씨
 
-![클라이밍장 지도에서 리드암벽 필터와 키워드 검색으로 장소를 고르고 로드뷰와 날씨를 확인하는 시연](../../assets/03-climbing-web/01_gym_map_search.gif)
+<a href="../../assets/03-climbing-web/01_gym_map_search.mp4"><img src="../../assets/03-climbing-web/01_gym_map_search.jpg" alt="클라이밍장 지도에서 리드암벽 필터와 키워드 검색으로 장소를 고르고 로드뷰와 날씨를 확인하는 시연 — 클릭하여 영상 보기" width="1280" height="917"></a>
 
 [GIF 원본 열기](../../assets/03-climbing-web/01_gym_map_search.gif?raw=1)
 
@@ -28,7 +30,7 @@
 
 ## 시연 2 · 성향 설문 10문항 → 실내 클라이밍장 TOP 3 추천
 
-![주소를 입력하고 성향 설문 10문항에 답해 실내 클라이밍장 TOP 3를 추천받은 뒤 지도에서 확인하는 시연](../../assets/03-climbing-web/02_gym_recommend.gif)
+<a href="../../assets/03-climbing-web/02_gym_recommend.mp4"><img src="../../assets/03-climbing-web/02_gym_recommend.jpg" alt="주소를 입력하고 성향 설문 10문항에 답해 실내 클라이밍장 TOP 3를 추천받은 뒤 지도에서 확인하는 시연 — 클릭하여 영상 보기" width="1280" height="917"></a>
 
 [GIF 원본 열기](../../assets/03-climbing-web/02_gym_recommend.gif?raw=1)
 
@@ -46,7 +48,7 @@
 
 ## 시연 3 · 선수 기록 차트 → 선수 상세 이동 · 필터
 
-![선수를 검색해 연도별·종목별·전체 메달 차트를 바꿔 보고 선수 상세 페이지로 이동해 필터와 정렬을 적용하는 시연](../../assets/03-climbing-web/03_results_chart_players.gif)
+<a href="../../assets/03-climbing-web/03_results_chart_players.mp4"><img src="../../assets/03-climbing-web/03_results_chart_players.jpg" alt="선수를 검색해 연도별·종목별·전체 메달 차트를 바꿔 보고 선수 상세 페이지로 이동해 필터와 정렬을 적용하는 시연 — 클릭하여 영상 보기" width="1280" height="917"></a>
 
 [GIF 원본 열기](../../assets/03-climbing-web/03_results_chart_players.gif?raw=1)
 

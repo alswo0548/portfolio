@@ -25,7 +25,7 @@
 
 여러 CCTV의 재난 후보를 사건으로 모으고, 외부 정보와 함께 분석해 관제 요원이 대응 순서와 기관·경로를 선택하도록 돕습니다. 영상에서 재난을 찾는 기능뿐 아니라 **탐지 이후 판단에 필요한 데이터와 근거를 연결하는 것**에 초점을 맞췄습니다.
 
-개발과 최종 발표는 완료했습니다. 다만 프로젝트 완료가 모든 운영 조건에서의 정확도·가용성 보증을 뜻하지는 않습니다. 기관 전달까지 지원하며 실제 출동 지령, 도착 확인, 현장 대응 완료를 자동화하지 않습니다.
+개발과 최종 발표는 완료했습니다. 기관 전달까지 지원하며 실제 출동 지령, 도착 확인, 현장 대응 완료를 자동화하지 않습니다.
 
 **확인 기준** — 2026-11-04 기준 원본 `main`은 `0af0bc2`(2026-10-31)입니다. 11월 2일 후속 수정 브랜치 `fix/n001-live-startup-retry-20261102`의 `a6cd563`도 함께 검토했습니다. 운영 UI는 11월 3~4일 직접 확인했으나 서버의 배포 커밋은 확인하지 않았습니다. 따라서 후속 브랜치의 코드를 모두 main 또는 운영 서버에 적용된 기능으로 간주하지 않습니다. 원본 README의 초기 스캐폴드 설명보다 실제 구현 파일과 화면을 기준으로 정리했습니다.
 
@@ -46,7 +46,7 @@
 - **이민재**: 기상·수위·교통 연동, LangGraph 사건 분석, 위험도·우선순위, 대응기관·경로 추천, 기관 전달·FCM, CCTV 환경 적응학습, Docker 배포·서비스 통합
 - **팀원**: CCTV 수집·스트리밍·모니터링, YOLO 기반 재난 탐지·사건 생성 중심
 
-사건 저장·조회·권한·판단 큐 기반을 담당하고 팀원의 탐지·사건 생성 흐름과 연결했습니다. 영상 탐지 시스템 전체를 혼자 구현한 것으로 서술하지 않습니다. 적응학습 역할은 별도 학습 환경에서 수행한 작업을 포함합니다. 저장소 `training/train.py`, `training/evaluate.py`는 미구현 진입점이 남아 있어 저장소만으로 학습을 재현할 수 있다는 주장은 하지 않습니다.
+사건 저장·조회·권한·판단 큐 기반을 담당하고 팀원의 탐지·사건 생성 흐름과 연결했습니다. 적응학습 역할은 별도 학습 환경에서 수행한 작업을 포함합니다. 저장소 `training/train.py`, `training/evaluate.py`는 미구현 진입점이 남아 있어 저장소만으로 학습을 재현할 수 있다는 주장은 하지 않습니다.
 
 ## 4. 기술 스택과 선정 이유
 
@@ -66,6 +66,26 @@
 **LangGraph 사용 = LLM 자율 판단은 아닙니다.** 핵심 위험도·기관·경로 점수는 규칙과 API 데이터로 계산합니다. MCP 기본 경로는 `Client(create_server())`로 같은 Python 프로세스 안의 FastMCP 서버를 호출하며, 별도의 원격 MCP 서버로 배포한 구조가 아닙니다.
 
 ## 5. 시스템 아키텍처
+
+### 최종 배포 구조
+
+DigitalOcean의 단일 서버에서 Docker Compose로 API·분석·알림·CCTV 워커와 PostgreSQL·Redis·MediaMTX·웹·Caddy를 분리했습니다. 사건을 저장한 뒤 분석 작업을 큐에 등록하고, 관제 요청과 외부 API·알림 작업의 실행 수명을 분리합니다.
+
+### 프로젝트 원본 아키텍처 — 설계와 구현 비교
+
+[![팀에서 작성한 원본 시스템 아키텍처 설계도 — 클릭하면 고해상도 원본](../../assets/01-octv/design/architecture-plan-preview.jpg)](../../assets/01-octv/design/architecture-plan.png)
+
+원본의 구성·색상·흐름을 보존했습니다. **이 그림은 기획 단계 자료이며 최종 배포도와 같지 않습니다.** 화면에서 읽기 어려운 글자는 이미지를 눌러 원본에서 확대할 수 있습니다.
+
+| 원본 설계 | 최종 구현에서 확인한 내용 |
+|---|---|
+| GPU 서버 / CPU 서버 분리 | DigitalOcean 단일 서버의 컨테이너 분리; 시연 YOLO CPU 추론 |
+| MySQL | PostgreSQL 17.11·SQL 마이그레이션 |
+| S3 Object Storage | 원본 그림의 S3 운영 배포는 확인되지 않음; 최종 배포 구성의 저장 경로·볼륨 기준 |
+| 영상에 박스를 합성한 뒤 스트리밍 | DEMO N001은 영상 재생과 표시용 YOLO JSON 조회를 분리 |
+| 위험도와 우선순위 독립 단계 | 최종 그래프의 `assess_risk`에서 함께 계산 |
+
+### 코드 기준 논리 구조
 
 ```mermaid
 flowchart TD
@@ -111,7 +131,20 @@ flowchart TD
     F --> P["save_results"]
 ```
 
-총 7개 처리 노드이며 우선순위는 `assess_risk` 안에서 결정합니다. 기본 흐름은 이미 평가된 사건이나 `DETECTED`·`CONFIRMED` 이외 상태 등을 걸러 불필요한 재실행을 피합니다. 외부 상황 수집은 순차 호출이고, 기관별 경로 조회에는 최대 4개 스레드를 사용합니다. 전체 파이프라인이 병렬 수집이라고 설명하지 않습니다.
+총 7개 처리 노드이며 우선순위는 `assess_risk` 안에서 결정합니다. 기본 흐름은 이미 평가된 사건이나 `DETECTED`·`CONFIRMED` 이외 상태 등을 걸러 불필요한 재실행을 피합니다. 외부 상황 수집은 순차 호출이고, 기관별 경로 조회에는 최대 4개 스레드를 사용합니다. 
+
+<details>
+<summary>팀의 원본 서비스·모델 워크플로우 보기</summary>
+
+[![서비스 AI 워크플로우 기획 원본](../../assets/01-octv/design/service-workflow-plan-preview.jpg)](../../assets/01-octv/design/service-workflow-plan.png)
+
+원본의 감시→탐지→사건→판단→기관 선택 흐름을 참고했습니다. 원본에 기재된 사고·차량 등의 분류, LLM 추천 이유 생성, TMAP 선택 경로 전달을 모두 최종 구현으로 간주하지 않습니다. 최종 재난 유형은 침수·쓰러진 나무·심각한 도로 파손·도로 장애물이며, 판단·추천 점수는 규칙 기반입니다. 카카오내비는 목적지 좌표로 별도 길안내를 실행합니다.
+
+[모델 학습 워크플로우 원본](../../assets/01-octv/design/training-workflow-plan.png) · [기획 ERD 원본](../../assets/01-octv/design/erd-plan.png)
+
+적응학습은 별도 환경에서 진행했습니다. `training/train.py`, `training/evaluate.py`에는 미구현 진입점이 남아 있어 저장소 안에서 전체 학습·평가를 재현하는 자동 파이프라인과 구분합니다.
+
+</details>
 
 ## 7. 데이터베이스와 API
 
@@ -137,11 +170,42 @@ flowchart TD
 
 ### API와 접근 제어
 
-사건 목록·상세·분석 요청, CCTV 모니터링, 기관 추천·경로·전달, 알림과 지원 요청 영역으로 나뉩니다. 초기 문서의 ‘CCTV·알림 전체 501 예정’ 설명은 현재 구현과 맞지 않아 제거했습니다. 모든 라우트가 완성됐다고 일괄 보증하지는 않습니다.
+사건 목록·상세·분석 요청, CCTV 모니터링, 기관 추천·경로·전달, 알림과 지원 요청 영역으로 나뉩니다. 초기 문서의 ‘CCTV·알림 전체 501 예정’ 설명은 현재 구현과 맞지 않아 제거했습니다. 
 
 기관 사용자의 조회 범위는 요청의 `agency_id`가 아니라 로그인 사용자의 소속과 전달 관계로 정합니다. 상세 조회 권한이 없으면 사건 존재 여부를 노출하지 않도록 처리합니다. 관리자의 사건 목록과 기관의 수신 목록은 동일한 공개 데이터가 아닙니다.
 
 ## 8. 핵심 구현
+
+### ⓪ LangGraph — 사건의 처리 순서를 명시적으로 연결
+
+**문제** — 수집·평가·추천을 한 함수에 모으면 중간 실패와 분석 제외 조건을 추적하기 어렵습니다.
+
+**해결** — 사건 상태를 공유하는 7개 노드로 분리하고, 사건 로드 단계에서 종료 조건을 판단합니다. 외부 데이터는 MCP 도구를 통해 같은 계약으로 받습니다.
+
+**핵심 코드** — `ai/orchestration/pipeline.py` (발췌)
+
+```python
+graph = StateGraph(PipelineState) # LangGraph의 기본 틀 생성
+nodes = create_nodes(config) # 7개의 노드를 딕셔너리로 가지고옴
+for name, node in nodes.items():
+    graph.add_node(name, node)
+graph.add_edge(START, 'load_incident')
+graph.add_conditional_edges(
+    'load_incident',
+    lambda state: 'stop' if state['result'] else 'continue',
+    {'stop': END, 'continue': 'collect_context'},
+)
+sequence = (
+    'collect_context', 'assess_risk', 'select_agencies',
+    'evaluate_routes', 'finalize_agencies', 'save_results',
+)
+for current, following in zip(sequence, sequence[1:]):
+    graph.add_edge(current, following)
+graph.add_edge('save_results', END)
+return graph.compile()
+```
+
+**결과** — 위험도 산정과 경로 평가를 독립적으로 수정하면서 동일한 사건 상태를 저장까지 전달합니다. 그래프를 사용하되 점수 결정은 규칙 기반으로 유지해 판단 근거를 설명할 수 있게 했습니다.
 
 ### ① 외부 데이터를 값과 상태로 함께 전달
 
@@ -150,6 +214,24 @@ flowchart TD
 CCTV 좌표와 기상 격자·수위 관측소·교통 링크의 매핑을 캐시합니다. `cctv_mapping.py`의 좌표 지문으로 매핑 변경을 구분하고 Redis 캐시를 사용합니다. 후보 관측소·교통 링크는 검증된 관측 또는 도로 통제 사실과 다릅니다. 매핑이 없으면 `NO_MAPPING`으로 남깁니다.
 
 필수 필드 기본 설정은 빈 목록이므로 외부 정보가 일부 없더라도 재난 유형의 기본 점수로 분석을 이어갈 수 있습니다. **미수집을 안전·0이라는 관측으로 바꾸지 않는 것**이 핵심입니다.
+
+**핵심 코드** — `ai/mcp/client.py` (발췌)
+
+```python
+async with Client(
+    create_server()
+) as client:
+
+    # MCP 서버에 등록된 도구 호출
+    result = await client.call_tool(
+        'get_incident_context',                 # 도구 이름
+        {
+            'incident_id': incident_id          # 외부 정보를 조회할 사건 ID
+        }
+    )
+```
+
+**코드의 역할** — `get_incident_context` 도구를 호출하고 결과를 `ContextSnapshot`으로 복원합니다. 별도 원격 서버 대신 같은 프로세스의 FastMCP를 사용해 외부 수집의 인터페이스를 분리했습니다.
 
 ### ② 위험도와 우선순위
 
@@ -162,6 +244,30 @@ CCTV 좌표와 기상 격자·수위 관측소·교통 링크의 매핑을 캐�
 | 우선순위 | 70점 이상 P1 / 40점 이상 P2 / 40점 미만 P3 |
 
 `priority_score`는 위험도 점수와 같습니다. 대기 시간 보너스를 별도로 더하는 알고리즘은 아닙니다. 같은 점수에서는 먼저 탐지된 사건과 ID로 순서를 안정화합니다. 소개 페이지의 85점은 이 규칙의 실측 정확도 증명이 아니라 DEMO 시나리오 출력입니다.
+
+**핵심 코드** — `ai/risk_priority/rules.py` (발췌)
+
+```python
+    severity = min(60.0, base + severity_extra)
+    exposure = min(30.0, exposure_extra)
+    worsening = min(10.0, worsening_extra)
+    score = round(min(100.0, severity + exposure + worsening), 2)
+    medium, high = _risk_thresholds(policy)
+    level = (
+        "HIGH" if score >= high
+        else "MEDIUM" if score >= medium
+        else "LOW"
+    )
+    priority = (
+        "P1" if score >= high
+        else "P2" if score >= medium
+        else "P3"
+    )
+```
+
+**문제와 해결** — 데이터가 없을 때 0으로 처리하면 ‘위험이 낮다’는 관측과 혼동됩니다. `observation()`은 `status == "OK"`, 값 존재, 유한한 음이 아닌 숫자를 확인하고 부적합 필드를 `unknown`에 남깁니다. 위 코드는 검증된 관측의 구성별 상한과 우선순위 경계를 적용합니다.
+
+**결과** — 위험도 숫자와 함께 구성 점수·출처·결측을 저장해 관제 화면에서 해석할 근거를 남깁니다.
 
 ### ③ 기관 선정과 경로 점수는 분리
 
@@ -176,9 +282,54 @@ CCTV 좌표와 기상 격자·수위 관측소·교통 링크의 매핑을 캐�
 
 통제 상태가 정상이고 차단 영역의 검증 플래그와 좌표가 확보된 경우에만 Shapely 교차 검사를 이용해 경로 배제 여부를 판단합니다. 누락·오래된 값·불확실한 통제 정보는 `NEEDS_REVIEW`로 유지합니다. 상태는 `VERIFIED`, `NEEDS_REVIEW`, `DISQUALIFIED`로 구분하며 검증된 정보의 범위를 넘어 안전을 보장하지 않습니다. 사건 근처로만 도착하는 대체 경로나 외부 내비의 재계산 결과 역시 별도 확인 대상입니다.
 
+**핵심 코드** — `ai/agency_recommendation/recommender.py` (발췌)
+
+```python
+        valid_routes.sort(key=lambda route: (
+            route.get('score_breakdown_json', {}).get('verification_status')
+            != 'VERIFIED',
+            -(route.get('total_score') or 0),
+            route['duration_sec'],
+        ))
+        best = valid_routes[0] if valid_routes else None
+        # 아직 경로확인 전이니 점수 초기화 후, 실제경로가 있을시에 아래 if문에서 최종 접근성 계산을 실행
+        time_points = distance_points = 0.0
+        access_status = 'NO_AVAILABLE_ROUTE'
+        if best:
+            access_status = best['score_breakdown_json']['verification_status']
+            time_points = 15 / (1 + best['duration_sec'] / duration_scale)
+            distance_points = 5 / (1 + best['distance_m'] / distance_scale)
+```
+
+**문제와 해결** — 직선거리만 가까운 기관이 실제로 접근하기 쉬운 것은 아닙니다. 후보 기관의 실제 경로를 조회한 다음, 제외 사유가 없는 경로 중 검증 상태·점수·시간 순으로 대표 경로를 고르고 시간·거리 접근성 점수를 계산합니다.
+
+**결과** — 기관 적합성 점수에 실제 접근성을 반영하고, 미검증 경로는 추가 확인 대상으로 남깁니다.
+
 ### ④ 분석 워커의 중복·실패 처리
 
 `backend/app/workers.py`는 분석과 알림 큐를 분리합니다. 분석 대상 상태와 기존 평가를 확인하고 Redis 락으로 중복 실행을 억제합니다. 재시도 가능한 HTTP·DB·외부 맥락 오류는 지연 후 다시 처리하며 재시도 중 락을 유지하고 최종 종료 시 해제합니다. 사건 저장과 큐 등록을 분리해 큐 실패가 이미 저장된 사건을 없애지 않도록 합니다.
+
+**핵심 코드** — `backend/app/workers.py` (발췌)
+
+```python
+# ---------------------------------------------------------
+@celery_app.task(
+    bind=True,
+    name="octv.analyze_incident",
+    queue="analysis",
+    max_retries=3,
+)
+def analyze_incident(
+    self,
+    incident_id,
+    lock_token=None,
+):
+    ...  # 실행·재시도 본문 생략
+```
+
+**코드의 역할** — 분석을 `analysis` 큐의 Celery 작업으로 등록합니다. HTTP·DB·필수 맥락 오류는 30초 후 재시도하고, 재시도 중에는 락을 유지합니다. 완료·최종 실패 때만 락을 해제합니다.
+
+**결과** — 외부 API 지연 때문에 HTTP 요청에서 전체 분석을 기다리지 않으며, 재시도 도중 같은 사건의 분석이 중복 등록되는 상황을 억제합니다. late ACK와 worker lost 재전달도 함께 설정했습니다.
 
 ### ⑤ 기관 전달·FCM 알림
 
@@ -189,6 +340,27 @@ CCTV 좌표와 기상 격자·수위 관측소·교통 링크의 매핑을 캐�
 - FCM 발송 요청 수락과 실제 기기 수신·읽음·현장 출동은 구분
 
 이 수치들은 알림 재시도 정책이며 MCP나 모든 외부 API에 공통 적용되는 정책이 아닙니다.
+
+**핵심 코드** — `backend/app/notifications/service.py` (발췌)
+
+```python
+def _plan_retry(state: dict, deadline: float, retry_after: int = 0) -> None:
+    if state["attempts"] >= PUSH_MAX_ATTEMPTS:
+        state.update(status="EXHAUSTED", reason="ATTEMPT_LIMIT", next_attempt_at=0)
+        return
+    delay = max(60 * 2 ** (state["attempts"] - 1) + random.randint(0, 15), retry_after)
+    next_at = time.time() + delay
+    if next_at >= deadline:
+        # 허용 시간보다 긴 Retry-After를 짧게 잘라서 일찍 재시도하지 않습니다.
+        state.update(status="EXPIRED", reason="RETRY_OUTSIDE_DELIVERY_WINDOW", next_attempt_at=0)
+    else:
+        state.update(status="WAITING", next_attempt_at=next_at)
+
+```
+
+**문제와 해결** — 알림 장애 때 무제한 재전송하면 중복 발송과 오래된 사건 알림이 쌓입니다. 위 코드는 횟수·유효 시간을 제한하고 FCM의 `Retry-After`를 우선합니다. 기기별 결과를 저장해 실패 대상만 다시 보냅니다.
+
+**결과** — 발송 실패를 추적·복구하면서 이미 처리한 대상의 반복 전송을 줄입니다. 단말 실제 수신·읽음과 서버의 발송 요청 수락은 별개입니다.
 
 ## 9. 기술적 문제와 해결
 
@@ -201,7 +373,7 @@ CCTV 좌표와 기상 격자·수위 관측소·교통 링크의 매핑을 캐�
 | DEMO MP4 시작·추론 표시 동기화 | 디코딩 준비 후 초기 동기화, HTTP Range 재생과 추론 JSON 표시 분리 | 실제 카메라의 실시간 추론과 시연 재생을 구분해야 함 |
 | CCTV 연결 중단·재연결 | WebRTC 재연결과 서버 복구 backoff; 후속 브랜치에 N001 시작 재시도 개선 | 촬영 당시에도 연결 오류 CCTV가 표시됨 |
 
-후속 브랜치에는 N001 실시간 박스 표시 경로와 복구 개선 코드가 있지만, 이번 포트폴리오의 CCTV GIF는 **기존 사전 추론 JSON 표시 장면**입니다. 후속 코드를 근거로 해당 GIF가 실시간 추론임을 주장하지 않습니다.
+2026-11-04 새 녹화에서는 운영 N001 영상 위에 실제 YOLO JSON 기반 flood 박스와 신뢰도가 표시되는 것을 확인했습니다. 표시용 분석과 사건 생성은 별도 흐름이며, 수집 연결 상태가 바뀌는 장면도 관찰했습니다. 서버 설정이나 사건 데이터는 변경하지 않았습니다.
 
 ## 10. 테스트와 검증
 
@@ -209,13 +381,13 @@ CCTV 좌표와 기상 격자·수위 관측소·교통 링크의 매핑을 캐�
 
 | 항목 | 확인한 내용 | 수행하지 않은 검증 |
 |---|---|---|
-| CCTV 탐지 | 기존 실제 웹 자료의 영상·박스·신뢰도 변화 | 새 실시간 재난 발생·모델 정확도 측정 |
+| CCTV 탐지 | 11월 4일 운영 N001 영상·실제 YOLO JSON 박스·신뢰도 표시 | 새 실시간 재난 발생·모델 정확도 측정 |
 | 사건 분석 | 11월 4일 저장 사건·대표 이미지·P1·외부 정보·분석 펼치기 | 운영 사건 재생성·강제 재평가 |
 | 기관·경로 | 후보 경로 선택·기관 탭 전환·지도·시간·점수 | 실제 주행·출동, 전 구간 통제 검증 |
 | 기관 전달 | 기존 추천됨/전달됨 상태 조회 | 새 기관 전달·FCM 발송·모바일 수신 |
 | 배포 | Docker 구성과 운영 웹 접근 | 서버 내부 설정·배포 SHA·부하 성능 확인 |
 
-GIF 2·3은 운영 화면의 연속 캡처를 순서대로 변환한 자료입니다. 계정 영역 크롭·대기 단축·색상 최적화만 적용했습니다. 생성 UI나 별도 화면을 이어 붙여 동작을 꾸미지 않았습니다.
+새 MP4 4개는 2026-11-04 운영 웹의 전체 화면을 시간순으로 연속 캡처했습니다. 조작 사이의 대기는 줄였으며 화면·탐지 결과·커서를 합성하지 않았습니다. 약 6~8fps로 캡처해 15fps MP4로 인코딩했으므로 원본 서비스의 최대 프레임률을 나타내지는 않습니다.
 
 ## 11. 배운 점과 개선할 부분
 
