@@ -60,13 +60,13 @@ assets/
 | 웹 화면 GIF | 폭 800~960px, 10~12fps | 10MB 이하 |
 | 스크린샷 | 폭 1600px JPG | 300KB 이하 |
 
-## GIF 교체 방법
+## 보관용 GIF 교체 방법
 
 1. 새 파일을 **같은 이름**으로 만들어 `assets/<프로젝트>/`에 덮어씁니다.
 2. 커밋 후 GitHub에서 소개 페이지를 열어 바뀐 이미지를 확인합니다.
 3. 프로필 화면은 GitHub 이미지 캐시 때문에 몇 분 늦게 바뀔 수 있습니다. 바로 바꾸고 싶다면 프로필 README의 이미지 주소 끝에 `?v=2` 처럼 버전을 붙입니다.
 
-## 새 시연 GIF 추가 방법
+## 보관용 GIF 추가 방법
 
 1. `assets/01-octv/02_incident_analysis.gif`로 저장합니다.
 2. `projects/01-octv/README.md`의 해당 **시연** 섹션에 아래 형식으로 추가합니다.
@@ -106,12 +106,20 @@ assets/
 
 ## 현재 표시 방식 — 정적 미리보기 + MP4
 
-소개 페이지는 가벼운 JPG 미리보기를 먼저 표시하고, 클릭하면 MP4 파일 페이지를 엽니다. GitHub 파일 뷰어 또는 다운로드로 영상을 확인할 수 있으며 README 자동 재생을 전제로 하지 않습니다. 기존 GIF·PNG·MP4 경로는 보존합니다.
+소개 페이지는 가벼운 JPG 미리보기를 먼저 표시하고, 클릭하면 GitHub Pages의 시연 플레이어를 엽니다. `index.html`·`demos.js`가 재생 UI를 담당합니다. 영상은 재생 버튼을 누를 때만 `src`를 지정하며 `preload="none"`을 유지합니다. 기존 GIF·PNG·MP4 경로는 보존합니다. 위 GIF 예시는 보관용이며 새 소개 페이지에는 JPG+플레이어 링크 방식을 사용합니다.
 
 새 시연은 `demo_<기능>.jpg` / `demo_<기능>.mp4` 쌍으로 저장합니다. OCTV의 `demo_cctv`, `demo_overview`, `demo_analysis`, `demo_routes`는 2026-11-04 운영 화면 전체 녹화입니다. 이전 GIF는 새 녹화와 구분한 보관본입니다.
 
 ```markdown
-[![기능 설명 — 클릭하여 영상 보기](../../assets/01-octv/demo_cctv.jpg)](../../assets/01-octv/demo_cctv.mp4)
+[![기능 설명 — 클릭하여 영상 보기](../../assets/01-octv/demo_cctv.jpg)](https://alswo0548.github.io/portfolio/#octv-cctv)
 ```
 
 기획 원본은 `assets/01-octv/design/`에 보존합니다. 미리보기 JPG와 원본 PNG를 연결하고, 최종 구현과 다른 구조는 기술 상세 문서의 비교표를 함께 유지합니다.
+
+## 플레이어 배포 및 수정
+
+- GitHub Pages를 `main` 브랜치의 `/ (root)`에서 배포합니다. `.nojekyll`을 유지합니다.
+- 새 영상은 `demos.js`의 목록에 등록하고 해당 ID를 소개 페이지의 링크에 연결합니다.
+- 운영 서비스 API에 연결하지 않는 정적 플레이어입니다. 로그인·알림 발송·사건 생성이 없습니다.
+- 저장소 이름을 바꾸거나 복사할 때는 문서의 Pages 주소와 플레이어의 GitHub 문서 주소를 함께 변경합니다.
+- 배포 후 비로그인 브라우저에서 각 영상의 실제 재생과 모바일 폭을 확인합니다.
